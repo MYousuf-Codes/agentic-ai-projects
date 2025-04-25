@@ -1,0 +1,5 @@
+langchain-core
+langchain-pinecone
+langchain-google-genai
+pinecone
+python-dotenv 

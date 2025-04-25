@@ -1,0 +1,28 @@
+# Facebook configuration
+facebook:
+  post_frequency: "daily"  # Options: hourly, daily, weekly
+  post_time: "12:00"  # Time in 24-hour format
+  post_types:
+    - text
+    - text_with_image
+  categories:
+    - technology
+    - business
+    - motivation
+
+# Content generation settings
+content:
+  max_length: 280  # Maximum post length
+  style: "professional"  # Options: casual, professional, humorous
+  include_hashtags: true
+  max_hashtags: 3
+
+# Scheduling
+scheduling:
+  enabled: true
+  timezone: "UTC"  # Set your timezone
+
+# Logging
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  file: "logs/facebook_automation.log"

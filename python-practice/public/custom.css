@@ -1,0 +1,18 @@
+/* Change centered text */
+h1 {
+    font-size: 2rem !important;
+    font-weight: bold !important;
+    color: white !important;
+    content: "Welcome to M.Younus ChatBot" !important;
+  }
+  
+  /* Hide Chainlit logo */
+  .logo {
+    display: none !important;
+  }
+
+  /* Ensure messages stay visible */
+.chat-history {
+    overflow-y: auto !important;
+    max-height: 100vh !important;
+}

@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith - Modern E-commerce</title>
+
+  <style>
+    * {
+      margin: 0%;
+      padding: 0%;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 0%;
+      
+      
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #f97316;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --bg: #f9fafb;
+      --white: #ffffff;
+      --navbar-height: 72px;
+      
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      width: 100%;
+      padding: 0%;
+    }
+
+    .featured-categories {
+    padding: 4rem 0;
+    background: #f8fafc;
+    }
+
+    .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    }
+
+    .section-title {
+    font-size: 2rem;
+    color: #1a202c;
+    }
+
+    .section-subtitle {
+    font-size: 1rem;
+    color: #718096;
+    }
+
+    .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    }
+
+    .category-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    }
+
+    .category-card img {
+    width: 100%;
+    height: auto;
+    }
+
+    .category-content {
+    padding: 1rem;
+    }
+
+    .category-title {
+    margin: 0;
+    color: #1a202c;
+    }
+
+    .category-count {
+    margin: 0;
+    color: #718096;
+    }
+
+
+    /* Navbar styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--navbar-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .navbar.scrolled {
+      height: 60px;
+      backdrop-filter: blur(15px);
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+
+    .logo span {
+      display: inline-block;
+      transform: translateY(-2px);
+      margin-left: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-icon {
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .nav-icon:hover {
+      color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: var(--secondary);
+      color: white;
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* Hero section */
+    .hero {
+      margin-top: var(--navbar-height);
+      height: calc(100vh - var(--navbar-height));
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text {
+      max-width: 580px;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1s ease forwards 0.5s;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1s ease forwards 0.7s;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text);
+      border: 2px solid var(--text-light);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      position: relative;
+      width: 40%;
+    }
+
+    .product-image {
+      width: 100%;
+      height: auto;
+      position: relative;
+      opacity: 0;
+      transform: translateX(40px);
+      animation: fadeRight 1s ease forwards 0.9s;
+    }
+
+    .floating-card {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      animation: floatIn 1s ease forwards, float 3s ease-in-out infinite;
+    }
+
+    .card-1 {
+      top: 10%;
+      left: -15%;
+      animation-delay: 1.2s, 2s;
+    }
+
+    .card-2 {
+      bottom: 15%;
+      right: -10%;
+      animation-delay: 1.4s, 2.5s;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 10%;
+      right: 0;
+      background-color: var(--secondary);
+      color: white;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 20px 0 0 20px;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+      transform: translateX(100%);
+      animation: slideIn 0.7s ease forwards 1.6s;
+    }
+
+    /* Featured categories section */
+    .featured-categories {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .category-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 320px;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .category-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .category-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .category-count {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Featured products section */
+    .featured-products {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .products-title {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .view-all {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .view-all:hover {
+      color: var(--primary-dark);
+      transform: translateX(4px);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .product-image-container {
+      position: relative;
+      padding-top: 100%; /* 1:1 aspect ratio */
+      overflow: hidden;
+    }
+
+    .product-card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-card-image {
+      transform: scale(1.08);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background-color: var(--primary);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .product-favorite {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-favorite:hover {
+      color: red;
+      transform: scale(1.1);
+    }
+
+    .product-favorite.active {
+      color: red;
+    }
+
+    .product-details {
+      padding: 1.5rem;
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .product-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .stars {
+      display: flex;
+      color: #fbbf24;
+    }
+
+    .review-count {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .product-price {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .current-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .old-price {
+      font-size: 1rem;
+      text-decoration: line-through;
+      color: var(--text-light);
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .add-to-cart {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .add-to-cart:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .color-options {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .color-option {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .color-option:hover {
+      transform: scale(1.2);
+    }
+
+    /* Newsletter section */
+    .newsletter {
+      background-color: var(--primary);
+      padding: 5rem 2rem;
+      margin: 5rem 0;
+      color: white;
+    }
+
+    .newsletter-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-text {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .newsletter-input {
+      flex-grow: 1;
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .newsletter-btn {
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      background-color: var(--primary-dark);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.65rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .newsletter-btn:hover {
+      background-color: #3730a3;
+    }
+
+    /* Feature section */
+    .features {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      background-color: rgba(99, 102, 241, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .feature-text {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+/* Feature Cards */
+    .feature-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    transition: var(--transition);
+    }
+
+    .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    }
+
+    .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    }
+
+    .feature-text {
+    color: var(--light-text);
+    font-size: 0.95rem;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+    background-color: var(--light-bg);
+    }
+
+    .testimonials-slider {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 2rem;
+    }
+
+    .testimonial-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    gap: 1.5rem;
+    flex: 0 0 100%;
+    transition: var(--transition);
+    }
+
+    .testimonial-avatar {
+    flex-shrink: 0;
+    }
+
+    .testimonial-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    }
+
+    .testimonial-content {
+    flex-grow: 1;
+    }
+
+    .testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    }
+
+    .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    }
+
+    .author-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    }
+
+    .author-title {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    }
+
+    .testimonial-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    }
+
+    .control-prev, .control-next {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    }
+
+    .control-prev:hover, .control-next:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    }
+
+    .control-dots {
+    display: flex;
+    gap: 0.5rem;
+    }
+
+    .dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+    }
+
+    .dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+    }
+
+    /* Brands Section */
+    .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-items: center;
+    }
+
+    .brand-logo img {
+    max-width: 100%;
+    height: auto;
+    transition: var(--transition);
+    filter: grayscale(100%);
+    opacity: 0.7;
+    }
+
+    .brand-logo:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+    }
+
+    /* Instagram Feed Section */
+    .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    }
+
+    .instagram-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    }
+
+    .instagram-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+    }
+
+    .instagram-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+    color: white;
+    }
+
+    .instagram-item:hover img {
+    transform: scale(1.05);
+    }
+
+    .instagram-item:hover .instagram-overlay {
+    opacity: 1;
+    }
+
+    /* Footer */
+    .footer {
+    background-color: #1a202c;
+    color: white;
+    padding: 4rem 2rem 2rem;
+    }
+
+    .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+
+    .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    }
+
+    .footer-description {
+    color: #a0aec0;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    }
+
+    .social-links {
+    display: flex;
+    gap: 1rem;
+    }
+
+    .social-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    }
+
+    .social-link:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+    }
+
+    .footer-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+    }
+
+    .footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color);
+    }
+
+    .footer-menu {
+    list-style: none;
+    }
+
+    .footer-menu li {
+    margin-bottom: 0.75rem;
+    }
+
+    .footer-menu a {
+    color: #a0aec0;
+    transition: var(--transition);
+    }
+
+    .footer-menu a:hover {
+    color: white;
+    padding-left: 5px;
+    }
+
+    .contact-info {
+    list-style: none;
+    }
+
+    .contact-info li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #a0aec0;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+    .testimonial-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .testimonial-avatar {
+        margin: 0 auto 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .instagram-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    }
+
+    @media (max-width: 576px) {
+    section {
+        padding: 3rem 1rem;
+    }
+    
+    .instagram-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1f2937;
+      color: white;
+      padding: 5rem 2rem 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .social-icon:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.2s;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      padding-left: 8px;
+    }
+
+    .footer-links a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 0;
+      height: 1px;
+      background-color: var(--primary);
+      transition: all 0.2s;
+      opacity: 0;
+    }
+
+    .footer-links a:hover::before {
+      width: 4px;
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text {
+        margin-bottom: 3rem;
+      }
+
+      .hero-cta {
+        justify-content: center;
+      }
+
+      .hero-image {
+        width: 70%;
+      }
+
+      .floating-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-icons {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+      position: fixed;
+      top: var(--navbar-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: white;
+      z-index: 999;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-links {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-links li {
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: block;
+      padding: 0.5rem 0;
+    }
+
+    .mobile-icons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 2rem;
+    }
+
+    .mobile-icon {
+      width: 50px;
+      height: 50px;
+      background-color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    /* Animation for product cards on scroll */
+    .product-card, .category-card, .feature-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .product-card.is-visible, .category-card.is-visible, .feature-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
+  
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      <span>Zenith</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="Zenith - Modern E-commerce/">Home</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Sale</a></li>
+      <li><a href="about/">About</a></li>
+    </ul>
+    <div class="nav-icons">
+      <div class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </div>
+      <div class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </div>
+      <div class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </div>
+      <div class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="cart-count">3</span>
+      </div>
+    </div>
+    <button class="mobile-menu-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <ul class="mobile-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Sale</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="mobile-icons">
+      <div class="mobile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </div>
+      <div class="mobile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </div>
+      <div class="mobile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </div>
+      <div class="mobile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="cart-count">3</span>
+      </div>
+    </div>
+  </div>
+
+<!-- Featured Products Section -->
+<section class="featured-products" style="opacity: 1; visibility: visible;">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Elevate Your Style with Premium Fashion</h1>
+        <p class="hero-subtitle">Discover the latest trends in clothing, accessories and more with our exclusive collection</p>
+        <div class="hero-cta">
+          <a href="#" class="btn btn-primary">Shop Now</a>
+          <a href="#" class="btn btn-outline">Explore</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Fashion Model" class="product-image">
+        <div class="floating-card card-1">
+          <div class="card-title">Summer Collection</div>
+          <div class="card-price">From $29.99</div>
+        </div>
+        <div class="floating-card card-2">
+          <div class="card-title">Free Shipping</div>
+          <div class="card-text">On orders over $50</div>
+        </div>
+        <div class="discount-badge">50% OFF</div>
+      </div>
+    </div>
+  </section>
+
+<!-- Featured Categories Section -->
+<section class="featured-categories" style="opacity: 1; visibility: visible;">
+    <div class="section-header" style="opacity: 1; visibility: visible;">
+        <h2 class="section-title" style="opacity: 1; visibility: visible;">Shop by Category</h2>
+        <p class="section-subtitle" style="opacity: 1; visibility: visible;">Browse our wide range of categories to find exactly what you're looking for</p>
+    </div> 
+    <div class="categories-grid" style="opacity: 1; visibility: visible;">
+        <div class="category-card" style="opacity: 1; visibility: visible;">
+            <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Men's Clothing">
+            <div class="category-content" style="opacity: 1; visibility: visible;">
+                <h3 class="category-title" style="opacity: 1; visibility: visible; color: white;">Men's Clothing</h3>
+                <p class="category-count" style="opacity: 1; visibility: visible;  color: white;">125 items</p>
+            </div>
+        </div>
+        <div class="category-card" style="opacity: 1; visibility: visible;">
+            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Women's Clothing">
+            <div class="category-content" style="opacity: 1; visibility: visible;">
+                <h3 class="category-title" style="opacity: 1; visibility: visible;  color: white;">Women's Clothing</h3>
+                <p class="category-count" style="opacity: 1; visibility: visible;  color: white;">198 items</p>
+            </div>
+        </div>
+        <div class="category-card" style="opacity: 1; visibility: visible;">
+            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Accessories">
+            <div class="category-content" style="opacity: 1; visibility: visible;">
+                <h3 class="category-title" style="opacity: 1; visibility: visible;  color: white;">Accessories</h3>
+                <p class="category-count" style="opacity: 1; visibility: visible;  color: white;">76 items</p>
+            </div>
+        </div>
+        
+</section>
+<!-- Featured Products Section -->
+<section class="featured-products" style="opacity: 1; visibility: visible;">
+    <div class="products-header">
+        <h2 class="products-title" style="opacity: 1; visibility: visible;">Featured Products</h2>
+        <a href="#" class="view-all" style="opacity: 1; visibility: visible;">View All <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+    </div>
+    <div class="products-grid" style="opacity: 1; visibility: visible; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
+        <!-- Product 1 -->
+        <div class="product-card" style="opacity: 1; visibility: visible;">
+            <div class="product-image-container" style="height: 400px;">
+                <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                <span class="product-badge">New</span>
+                <div class="product-favorite">♥</div>
+            </div>
+            <div class="product-details" style="opacity: 1; visibility: visible;">
+                <p class="product-category">Jackets</p>
+                <h3 class="product-title">Premium Denim Jacket</h3>
+                <div class="product-price">
+                    <span class="current-price">$129.99</span> 
+                    <span class="old-price">$159.99</span>
+                </div>
+            </div>
+        </div>
+
+     
+            <!-- Product 2 -->
+            <div class="product-card" style="opacity: 1; visibility: visible;">
+                <div class="product-image-container" style="height: 400px;">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-favorite">♥</div>
+                </div>
+                <div class="product-details" style="opacity: 1; visibility: visible;">
+                    <p class="product-category">Jackets</p>
+                    <h3 class="product-title">Premium Denim Jacket</h3>
+                    <div class="product-price">
+                        <span class="current-price">$129.99</span>
+                        <span class="old-price">$159.99</span>
+                    </div>
+                </div>
+            </div>
+
+        
+            <!-- Product 3 -->
+            <div class="product-card" style="opacity: 1; visibility: visible;">
+                <div class="product-image-container" style="height: 400px;">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-favorite">♥</div>
+                </div>
+                <div class="product-details" style="opacity: 1; visibility: visible;">
+                    <p class="product-category">Jackets</p>
+                    <h3 class="product-title">Premium Denim Jacket</h3>
+                    <div class="product-price">
+                        <span class="current-price">$129.99</span>
+                        <span class="old-price">$159.99</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Product 4 -->
+            <div class="product-card" style="opacity: 1; visibility: visible;">
+                <div class="product-image-container" style="height: 400px;">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-favorite">♥</div>
+                </div>
+                <div class="product-details" style="opacity: 1; visibility: visible;">
+                    <p class="product-category">Jackets</p>
+                    <h3 class="product-title">Premium Denim Jacket</h3>
+                    <div class="product-price">
+                        <span class="current-price">$129.99</span>
+                        <span class="old-price">$159.99</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Product 5 -->
+            <div class="product-card" style="opacity: 1; visibility: visible;">
+                <div class="product-image-container" style="height: 400px;">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-favorite">♥</div>
+                </div>
+                <div class="product-details" style="opacity: 1; visibility: visible;">
+                    <p class="product-category">Jackets</p>
+                    <h3 class="product-title">Premium Denim Jacket</h3>
+                    <div class="product-price">
+                        <span class="current-price">$129.99</span>
+                        <span class="old-price">$159.99</span>
+                    </div>
+                </div>
+            </div>
+
+        
+            <!-- Product 6 -->
+            <div class="product-card" style="opacity: 1; visibility: visible;">
+                <div class="product-image-container" style="height: 400px;">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Denim Jacket" class="product-card-image">
+                    <span class="product-badge">New</span>
+                    <div class="product-favorite">♥</div>
+                </div>
+                <div class="product-details" style="opacity: 1; visibility: visible;">
+                    <p class="product-category">Jackets</p>
+                    <h3 class="product-title">Premium Denim Jacket</h3>
+                    <div class="product-price">
+                        <span class="current-price">$129.99</span>
+                        <span class="old-price">$159.99</span>
+                    </div>
+                </div>
+            </div>
+</section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="newsletter-content">
+      <h2 class="newsletter-title">Subscribe to Our Newsletter</h2>
+      <p class="newsletter-text">Get the latest updates on new products and upcoming sales</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+<!-- Add these in your head section -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Testimonials Section -->
+<section class="testimonials" style="padding: 6rem 0; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); position: relative; overflow: hidden;">
+    <div class="section-header" style="text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 1rem;">
+        <h2 class="section-title" style="font-size: 2.5rem; color: #1a202c; margin-bottom: 1rem; font-weight: 700;">Customer Experiences</h2>
+        <p class="section-subtitle" style="color: #64748b; font-size: 1.1rem; line-height: 1.6;">Hear what our community says about their shopping journey</p>
+    </div>
+
+    <div class="swiper-container" style="padding: 2rem 0 4rem;">
+        <div class="swiper-wrapper">
+            <!-- Testimonial Slide 1 -->
+            <div class="swiper-slide" style="padding: 0 15px; height: auto;">
+                <div class="testimonial-card" style="background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all 0.3s ease;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div>
+                    <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0;">
+                        <div style="margin-left: 1rem;">
+                            <h4 style="margin: 0; color: #1e293b; font-weight: 600;">Sarah Johnson</h4>
+                            <p style="margin: 0.25rem 0 0; color: #64748b; font-size: 0.9rem;">Verified Buyer</p>
+                        </div>
+                    </div>
+                    <div class="stars" style="color: #f59e0b; margin-bottom: 1.5rem; font-size: 1.25rem;">★★★★★</div>
+                    <p style="color: #475569; line-height: 1.7; margin-bottom: 1.5rem; flex-grow: 1; font-style: italic; position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: -10px; left: -10px; z-index: 0; opacity: 0.7;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span style="position: relative; z-index: 1;">"Amazing quality and fast shipping! The clothes fit perfectly and the customer service was exceptional. I'll definitely shop here again."</span>
+                    </p>
+                    <div style="color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Purchased: Summer Dress Collection
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial Slide 2 -->
+            <div class="swiper-slide" style="padding: 0 15px; height: auto;">
+                <div class="testimonial-card" style="background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all 0.3s ease;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #8b5cf6, #d946ef);"></div>
+                    <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0;">
+                        <div style="margin-left: 1rem;">
+                            <h4 style="margin: 0; color: #1e293b; font-weight: 600;">Michael Chen</h4>
+                            <p style="margin: 0.25rem 0 0; color: #64748b; font-size: 0.9rem;">Loyal Customer</p>
+                        </div>
+                    </div>
+                    <div class="stars" style="color: #f59e0b; margin-bottom: 1.5rem; font-size: 1.25rem;">★★★★★</div>
+                    <p style="color: #475569; line-height: 1.7; margin-bottom: 1.5rem; flex-grow: 1; font-style: italic; position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: -10px; left: -10px; z-index: 0; opacity: 0.7;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span style="position: relative; z-index: 1;">"The quality of their products is outstanding. Never been disappointed with my purchases! The return process was hassle-free when I needed to exchange sizes."</span>
+                    </p>
+                    <div style="color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Purchased: Premium Denim Jacket
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial Slide 3 -->
+            <div class="swiper-slide" style="padding: 0 15px; height: auto;">
+                <div class="testimonial-card" style="background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all 0.3s ease;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #d946ef, #ec4899);"></div>
+                    <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Wilson" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0;">
+                        <div style="margin-left: 1rem;">
+                            <h4 style="margin: 0; color: #1e293b; font-weight: 600;">Emma Wilson</h4>
+                            <p style="margin: 0.25rem 0 0; color: #64748b; font-size: 0.9rem;">Fashion Blogger</p>
+                        </div>
+                    </div>
+                    <div class="stars" style="color: #f59e0b; margin-bottom: 1.5rem; font-size: 1.25rem;">★★★★★</div>
+                    <p style="color: #475569; line-height: 1.7; margin-bottom: 1.5rem; flex-grow: 1; font-style: italic; position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: -10px; left: -10px; z-index: 0; opacity: 0.7;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span style="position: relative; z-index: 1;">"Trendy designs and excellent prices. The website is easy to navigate and checkout is smooth. I've featured their products multiple times on my blog!"</span>
+                    </p>
+                    <div style="color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Purchased: Accessories Bundle
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial Slide 4 -->
+            <div class="swiper-slide" style="padding: 0 15px; height: auto;">
+                <div class="testimonial-card" style="background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 2.5rem; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all 0.3s ease;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e);"></div>
+                    <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Rodriguez" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0;">
+                        <div style="margin-left: 1rem;">
+                            <h4 style="margin: 0; color: #1e293b; font-weight: 600;">David Rodriguez</h4>
+                            <p style="margin: 0.25rem 0 0; color: #64748b; font-size: 0.9rem;">First-time Buyer</p>
+                        </div>
+                    </div>
+                    <div class="stars" style="color: #f59e0b; margin-bottom: 1.5rem; font-size: 1.25rem;">★★★★★</div>
+                    <p style="color: #475569; line-height: 1.7; margin-bottom: 1.5rem; flex-grow: 1; font-style: italic; position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: -10px; left: -10px; z-index: 0; opacity: 0.7;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span style="position: relative; z-index: 1;">"I was hesitant to order online, but their size guide was accurate and the product photos matched exactly what I received. Will definitely order again!"</span>
+                    </p>
+                    <div style="color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Purchased: Casual T-Shirts
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Custom Pagination -->
+        <div class="swiper-pagination" style="position: relative; bottom: 0; margin-top: 2rem;"></div>
+        
+        <!-- Custom Navigation -->
+        <div class="swiper-button-next" style="right: 10px; background: white; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: #6366f1; transition: all 0.3s ease;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </div>
+        <div class="swiper-button-prev" style="left: 10px; background: white; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: #6366f1; transition: all 0.3s ease;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- Initialize Swiper -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const swiper = new Swiper('.swiper-container', {
+            // Optional parameters
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                // When window width is >= 640px
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                // When window width is >= 768px
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                // When window width is >= 1024px
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            },
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: function (index, className) {
+                    return '<span class="' + className + '" style="background: #6366f1; width: 10px; height: 10px; margin: 0 5px;"></span>';
+                },
+            },
+        });
+    });
+</script>
+
+
+<!-- Footer -->
+<footer class="footer" style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); position: relative; overflow: hidden;">
+    <!-- Lightning Effect Overlay -->
+    <div class="lightning" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+        <div class="bolt" style="position: absolute; opacity: 0; width: 2px; height: 30px; background: #fff; filter: blur(1px); animation: lightning 5s infinite;"></div>
+        <div class="bolt" style="position: absolute; opacity: 0; width: 2px; height: 50px; background: #fff; filter: blur(1px); animation: lightning 7s infinite 2s;"></div>
+        <div class="bolt" style="position: absolute; opacity: 0; width: 3px; height: 40px; background: #fff; filter: blur(1px); animation: lightning 4s infinite 1s;"></div>
+    </div>
+
+    <div class="footer-content" style="position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 6rem 2rem;">
+        <div class="footer-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 4rem;">
+            <!-- Company Info -->
+            <div class="footer-section" style="animation: fadeInUp 0.6s ease;">
+                <h3 class="footer-title" style="color: #fff; font-size: 1.5rem; margin-bottom: 1.5rem; position: relative; display: inline-block;">
+                    <span style="background: linear-gradient(90deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Zenith</span>
+                </h3>
+                <p style="color: #cbd5e1; line-height: 1.7; margin-bottom: 2rem;">Elevating your style with premium fashion and exceptional shopping experience.</p>
+                <div class="social-icons" style="display: flex; gap: 1rem;">
+                    <a href="#" class="social-icon" style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%); display: flex; align-items: center; justify-content: center; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon" style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #d946ef 0%, #ec4899 100%); display: flex; align-items: center; justify-content: center; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section" style="animation: fadeInUp 0.6s ease 0.2s;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 1.5rem;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <a href="#" style="color: #cbd5e1; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Home</a>
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <a href="#" style="color: #cbd5e1; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Shop</a>
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <a href="#" style="color: #cbd5e1; text-decoration: none; transition: all 0.3s ease; display: inline-block;">About Us</a>
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <a href="#" style="color: #cbd5e1; text-decoration: none; transition: all 0.3s ease; display: inline-block;">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-section" style="animation: fadeInUp 0.6s ease 0.4s;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 1.5rem;">Contact Us</h4>
+                <div style="color: #cbd5e1; margin-bottom: 1rem;">
+                    <p style="margin-bottom: 0.5rem;">123 Fashion Street</p>
+                    <p style="margin-bottom: 0.5rem;">New York, NY 10001</p>
+                    <p style="margin-bottom: 0.5rem;">Phone: (123) 456-7890</p>
+                    <p>Email: info@zenith.com</p>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <!-- <div class="footer-section" style="animation: fadeInUp 0.6s ease 0.6s;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 1.5rem;">Newsletter</h4>
+                <div class="newsletter-form" style="position: relative;">
+                    <input type="email" placeholder="Your email address" style="width: 100%; padding: 1rem; border-radius: 8px; border: none; background: rgba(255, 255, 255, 0.1); color: #fff; margin-bottom: 1rem;">
+                    <button style="width: 100%; padding: 1rem; border-radius: 8px; border: none; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Footer Bottom -->
+    <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 2rem 0; text-align: center; color: #cbd5e1; position: relative; z-index: 1;">
+        <p>© 2023 Zenith. All rights reserved.</p>
+    </div>
+
+    <style>
+        @keyframes lightning {
+            0% { opacity: 0; transform: translateY(-100%) rotate(45deg); }
+            2% { opacity: 1; }
+            3% { opacity: 0; transform: translateY(100%) rotate(45deg); }
+            100% { opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .footer-section a:hover {
+            color: #6366f1;
+            transform: translateX(5px);
+        }
+
+        .bolt {
+            left: random(100%);
+            top: random(100%);
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</footer></div>
+</body>
+</html>

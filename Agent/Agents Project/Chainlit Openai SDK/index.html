@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide scrollbars initially */
+        }
+
+        /* Lightning effect */
+        .lightning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            pointer-events: none; /* Make it non-interactive */
+            animation: lightning 2s linear infinite;
+        }
+
+        @keyframes lightning {
+            0%, 90%, 100% { opacity: 0; }
+            40%, 70% { opacity: 0.3; transform: scale(1.2); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            backdrop-filter: blur(10px); /* Background blur */
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            margin-bottom: 20px;
+            width: 70%;
+            max-width: 500px;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #367c39;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #ddd;
+        }
+
+        /* Animated Background */
+        #background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-animation"></div>
+    <div class="lightning"></div>
+
+    <header>
+        <h1>YouTube Downloader</h1>
+        <nav>
+            <!-- Add Navigation Links Here if Needed -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <input type="text" id="videoLink" placeholder="Enter YouTube Video Link">
+        <button onclick="downloadVideo()">Download</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function downloadVideo() {
+            const videoLink = document.getElementById('videoLink').value;
+            const statusDiv = document.getElementById('status');
+
+            if (!videoLink) {
+                statusDiv.textContent = "Please enter a YouTube video link.";
+                return;
+            }
+
+            statusDiv.textContent = "Processing... Please wait.";
+
+            // **THIS IS WHERE YOU WOULD MAKE THE API CALL TO YOUR BACKEND**
+            fetch('YOUR_API_ENDPOINT_HERE', { // Replace with your actual API endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ videoUrl: videoLink })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();  // Expecting a BLOB (binary large object)
+            })
+            .then(blob => {
+                 // Create a temporary download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'video.mp4'; // Or get filename from API response.
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url); // Clean up the URL
+
+                statusDiv.textContent = "Download complete!";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                statusDiv.textContent = "Download failed.  Please try again later.  Check your API endpoint.";
+            });
+        }
+
+        // Function to trigger lightning animation randomly
+        setInterval(() => {
+            const lightning = document.querySelector('.lightning');
+            lightning.style.animation = 'none'; // Reset animation
+            void lightning.offsetWidth; // Trigger reflow to restart animation
+            lightning.style.animation = null;
+        }, 5000); // Trigger lightning every 5 seconds (adjust as needed)
+    </script>
+</body>
+</html>

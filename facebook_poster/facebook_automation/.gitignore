@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/
+.idea/
+logs/
+data/user_data.json
